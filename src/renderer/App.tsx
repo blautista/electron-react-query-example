@@ -1,7 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import useGetTodosQuery from './hooks/api/useGetTodosQuery';
 import useAddTodoMutation from './hooks/api/useAddTodoMutation';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   Alert,
   Button,
@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import useCheckTodoMutation from './hooks/api/useCheckTodoMutation';
 
 function NewTodoInput({
@@ -47,7 +47,7 @@ function NewTodoInput({
 }
 
 function TodosPage() {
-  const { data, isLoading, isFetching } = useGetTodosQuery();
+  const { data, isLoading, isFetching, error } = useGetTodosQuery();
   const {
     mutate: mutateAddTodo,
     error: addTodoError,
@@ -58,6 +58,10 @@ function TodosPage() {
 
   if (!data) {
     return 'cargando todos..........';
+  }
+
+  if (error) {
+    return `uh oh ${error}`;
   }
 
   const fetching = isFetching || isCheckingTodo || isAddingTodo;

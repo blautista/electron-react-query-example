@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const checkTodo = ({ id, done }: { id: string; done: boolean }) =>
   window.api.request('check-todo', { id, done });
